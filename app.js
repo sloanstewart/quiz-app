@@ -22,24 +22,24 @@ function createQuizItems(){
 		['They will have a proper badge or pass.',
 		'Security will let them in if it\'s ok.',
 		'They look like part of the band.',
-		'They look like the want to be elsewhere.'],
-		'They look like the want to be elsewhere.'
+		'They look like they want to be elsewhere.'],
+		'They look like they want to be elsewhere.'
 	);
 
 	var q3 = new QuizItem('As an audio tech, how can you avoid injury lifting heavy equipment?',
-		['Label all heavy items as \"Lighting\".',
+		['Label all heavy items as &quot;Lighting&quot;.',
 		'Lift with your legs, never your back.',
 		'Have someone help you lift.',
 		'Try harder.'],
-		'Label all heavy items as \"Lighting\".'
+		'Label all heavy items as &quot;Lighting&quot;.'
 	);
 
 	var q4 = new QuizItem('Video content is on the way, when should you test it?',
 		['As soon as possible.',
 		'1 hour before show.',
 		'10 minutes before show.',
-		'Tell the client \"No\".'],
-		'Tell the client \"No\".'
+		'Tell the client &quot;No&quot;.'],
+		'Tell the client &quot;No&quot;.'
 	);
 
 	var q5 = new QuizItem('How do you make money in the music business?',
@@ -93,24 +93,21 @@ function createQuizItems(){
 	);
 
 	var end = new QuizItem('Well, you made it to the end. See your results below:',[
-		q1.question + '</br>yourAnswers',
-		q2.question + '</br>Your Answer',
-		q3.question + '</br>Your Answer',
-		q4.question + '</br>Your Answer',
-		q5.question + '</br>Your Answer',
-		q6.question + '</br>Your Answer',
-		q7.question + '</br>Your Answer',
-		q8.question + '</br>Your Answer',
-		q9.question + '</br>Your Answer',
-		q10.question + '</br>Your Answer',
+		q1.question + '</br><span class=youranswer id=q1></span>', //load answers from yourAnswers object
+		q2.question + '</br><span class=youranswer id=q2></span>',
+		q3.question + '</br><span class=youranswer id=q3></span>',
+		q4.question + '</br><span class=youranswer id=q4></span>',
+		q5.question + '</br><span class=youranswer id=q5></span>',
+		q6.question + '</br><span class=youranswer id=q6></span>',
+		q7.question + '</br><span class=youranswer id=q7></span>',
+		q8.question + '</br><span class=youranswer id=q8></span>',
+		q9.question + '</br><span class=youranswer id=q9></span>',
+		q10.question + '</br><span class=youranswer id=q10></span>',
 		],
 		null
 	);
 	return [intro, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, end];
 };
-
-// Array to store questions in order
-// var quizItemArr = [intro, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, end];
 
 // Store Current Question 
 quizItemArr = createQuizItems();
@@ -131,39 +128,68 @@ var yourAnswers = {
 };
 
 // Render quiz
-function renderQuestion(item){
-	$('.question').text(item.question);
-}
+	function renderQuestion(item){
+		$('.question').text(item.question);
+	}
 
-function renderAnswerList(item) {
-	var answerList = [];
-	$.each(item.answers, function(i, value){
-		var answerHTML =
-	'<div class="answer-container"><input type="radio" name="answer" id="'+value+'"><label for="'+value+'" class="answer">'+value+'</label></div>'
-		answerList.push(answerHTML);
-	});
-	$('.answer-list').html(answerList);
-}
+	function renderAnswerList(item) {
+			var answerList = [];
+			$.each(item.answers, function(i, value){
+				var answerHTML = '<div class="answer-container"><input type="radio" name="answer" id="'+value+'"><label for=\"'+value+'\" class=answer>'+value+'</label></div>'
+				answerList.push(answerHTML);
+			});
 
-function initializeSelection(){
+		$('.answer-list').html(answerList);
+
+		// Disable radio selection for intro and end
+		if (currentQ == quizItemArr[0]){
+			console.log('AT INTRO');
+			$('input[type=radio]').attr('disabled', true);
+			$('.button').attr('value', 'BEGIN');
+		}
+
+		else if (currentQ == quizItemArr[11]){
+			console.log('AT END');
+			$('input[type=radio]').attr('disabled', true);
+			$('.button').attr('value', 'RESTART').click(function(){
+				window.location.href=' ';
+			});
+		}
+
+		console.log('ANSWER LIST RENDERED');
+	}
+
+	function initializeSelection(){
 	// Save answer selection to yourAnswer object
 	$('.quiz-box').find('input[type=radio]').change(function(){
-		console.log('Selected: ' + $(this).attr('id'));4
+		// console.log('SELECTED: ' + $(this).attr('id'));4
 		q = 'q'+quizItemArr.indexOf(currentQ);
 		yourAnswers[q] = $(this).attr('id');
-		console.log('yourAnswers: ' + yourAnswers[q]);
+		console.log('YOUR ANSWER: ' + yourAnswers[q]);
 	});
-}
+	}
 
-
+	function renderYourAnswers(){
+		$('#q1').text(yourAnswers.q1);
+		$('#q2').text(yourAnswers.q2);
+		$('#q3').text(yourAnswers.q3);
+		$('#q4').text(yourAnswers.q4);
+		$('#q5').text(yourAnswers.q5);
+		$('#q6').text(yourAnswers.q6);
+		$('#q7').text(yourAnswers.q7);
+		$('#q8').text(yourAnswers.q1);
+		$('#q9').text(yourAnswers.q9);
+		$('#q10').text(yourAnswers.q10);
+	}
 
 function renderQuiz(x){
 	createQuizItems();
 	renderQuestion(x);
 	renderAnswerList(x);
 	initializeSelection();
+	renderYourAnswers();
+	console.log('QUIZ RENDERED');
 }
-
 
 // Next (submit) button
 $('form').submit(function(event){
@@ -182,20 +208,19 @@ function findCurrentQ(i) {
 	for(i = 0; i < quizItemArr.length; i++) {
 		if (quizItemArr[i].question == currentQ.question){
 			currentQ = quizItemArr[i + 1];
-			console.log('currentQ is: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
+			console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
 			return currentQ;
 		}
 		else if (currentQ == quizItemArr[9].question) {
-			console.log("currentQ at end of array");
+			console.log("CURRENTQ AT END OF ARRAY");
 		}
 	}
 };
 
 // Document ready
 $(function() {
-	console.log('doc ready');
+	console.log('DOC READY');
 	// Call render functions
-	console.log('currentQ is: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
+	console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
 	renderQuiz(currentQ);
-
 });
