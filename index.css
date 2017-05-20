@@ -10,10 +10,11 @@ body {
 	padding: 0;
 	margin: 0;
 	min-width: 225px;
+	height: 100vh;
 	background-image: linear-gradient(to top, #5f72bd 0%, #9b23ea 100%);	background-repeat: no-repeat;
 	background-size: cover;
-	background-attachment: fixed;
-}
+/*	background-attachment: fixed;
+*/}
 a {
 	text-decoration: none;
 	color: #fff;
