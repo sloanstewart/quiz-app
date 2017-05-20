@@ -5,7 +5,7 @@ function createQuizItems(){
 		this.answers = answers;
 		this.correct = correct;
 	};
-
+// can create array for all quiz items and not use constructor
 	var intro = new QuizItem('Welcome to this incredible quiz; now shut up and hang on.',
 		['Choose your answer carefully',
 		'There is only one correct answer per question.',
@@ -105,6 +105,8 @@ function createQuizItems(){
 		q10.question + '</br><span class=youranswer id=q10></span>',
 		],
 		null
+
+		// ^ iterate through questions and check CORRECT answers
 	);
 	return [intro, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, end];
 };
@@ -211,7 +213,7 @@ function findCurrentQ(i) {
 			console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
 			return currentQ;
 		}
-		else if (currentQ == quizItemArr[9].question) {
+		else if (currentQ == quizItemArr[9].question) { //May not need this if restart button works as it should
 			console.log("CURRENTQ AT END OF ARRAY");
 		}
 	}
