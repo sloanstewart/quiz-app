@@ -249,9 +249,11 @@ var yourAnswers = {
 		$('#q10').text(yourAnswers.q10);
 	}
 
+	
 	function renderCounter(){
 		$('.question-counter').html(currentQ.location)
 	}
+
 
 function renderQuiz(x){
 	createQuizItems();
@@ -294,9 +296,6 @@ $(function() {
 	// Call render functions
 	console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
 	renderQuiz(currentQ);
-	// Disable submit button
-	// $('input[type=submit').prop('disabled', true);
-
 	// Next (submit) button
 	$('form').submit(function(event){
 		nextQuestion(event);
