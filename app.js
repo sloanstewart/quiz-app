@@ -1,4 +1,20 @@
 // Create the question and answer objects
+var correctAnswers = [
+	null,
+	'\"Anything that can go wrong, will go wrong.\"',
+	'They look like they want to be elsewhere.',
+	'Label all heavy items as \"Lighting\".',
+	'Tell the client \"No\".',
+	'Sell beer.',
+	'All of the above.',
+	'Try to catch a nap or have a snack.',
+	'There is no lunch or dinner break.',
+	'Throw it in the garbage.',
+	['Huh?', 'What?', 'I dunno.', 'Eh.'],
+	null
+]
+
+
 function createQuizItems(){
 	function QuizItem(question, answers, location) {
 		this.question = question;
@@ -8,7 +24,6 @@ function createQuizItems(){
 // can create array for all quiz items and not use constructor
 	var intro = new QuizItem('Welcome to this incredible quiz; now shut up and hang on.',
 		['Choose your answer carefully',
-		'There is only one correct answer per question.',
 		'Only the penitent man will pass.',
 		'Good luck!'],
 		 null
@@ -17,14 +32,14 @@ function createQuizItems(){
 	var q1 = new QuizItem('What is Murphy\'s Law?',
 		['&quot;The road to success and the road to failure are almost exactly the same.&quot;',
 		'&quot;Anything that can go wrong, will go wrong.&quot;',
-		'&quot;Two wrongs don\'t make a right.&quot;',
+		'&quot;Two wrongs don&#39;t make a right.&quot;',
 		'&quot;Hope for the best, but prepare for the worst.&quot;'],
 		'1 of 10'
 	);
 
 	var q2 = new QuizItem('How can you tell, without question, if someone is allowed access?',
 		['They will have a proper badge or pass.',
-		'Security will let them in if it\'s ok.',
+		'Security will let them in if it&#39;s ok.',
 		'They look like part of the band.',
 		'They look like they want to be elsewhere.'],
 		'2 of 10'
@@ -49,7 +64,7 @@ function createQuizItems(){
 	var q5 = new QuizItem('How do you make money in the music business?',
 		['Hard work and dedication.',
 		'Sell beer.',
-		'Networking -It\'s who you know that counts.',
+		'Networking -It&#39;s who you know that counts.',
 		'Knowledge - Folks will value your skills.'],
 		'5 of 10'
 	);
@@ -95,16 +110,16 @@ function createQuizItems(){
 	);
 
 	var end = new QuizItem('Well, you made it to the end. See your results below:',[
-		q1.question + '</br><span class=youranswer id=q1></span>', //load answers from yourAnswers object
-		q2.question + '</br><span class=youranswer id=q2></span>',
-		q3.question + '</br><span class=youranswer id=q3></span>',
-		q4.question + '</br><span class=youranswer id=q4></span>',
-		q5.question + '</br><span class=youranswer id=q5></span>',
-		q6.question + '</br><span class=youranswer id=q6></span>',
-		q7.question + '</br><span class=youranswer id=q7></span>',
-		q8.question + '</br><span class=youranswer id=q8></span>',
-		q9.question + '</br><span class=youranswer id=q9></span>',
-		q10.question + '</br><span class=youranswer id=q10></span>',
+		'01. ' + q1.question + '<br>Correct Answer: <span class=correct-answer id=a1></span>' + '<br>Your Answer: <span class=youranswer id=q1></span>',
+		'02. ' + q2.question + '<br>Correct Answer: <span class=correct-answer id=a2></span>' + '<br>Your Answer: <span class=youranswer id=q2></span>',
+		'03. ' + q3.question + '<br>Correct Answer: <span class=correct-answer id=a3></span>' + '<br>Your Answer: <span class=youranswer id=q3></span>',
+		'04. ' + q4.question + '<br>Correct Answer: <span class=correct-answer id=a4></span>' + '<br>Your Answer: <span class=youranswer id=q4></span>',
+		'05. ' + q5.question + '<br>Correct Answer: <span class=correct-answer id=a5></span>' + '<br>Your Answer: <span class=youranswer id=q5></span>',
+		'06. ' + q6.question + '<br>Correct Answer: <span class=correct-answer id=a6></span>' + '<br>Your Answer: <span class=youranswer id=q6></span>',
+		'07. ' + q9.question + '<br>Correct Answer: <span class=correct-answer id=a7></span>' + '<br>Your Answer: <span class=youranswer id=q9></span>',
+		'08. ' + q7.question + '<br>Correct Answer: <span class=correct-answer id=a8></span>' + '<br>Your Answer: <span class=youranswer id=q7></span>',
+		'09. ' + q8.question + '<br>Correct Answer: <span class=correct-answer id=a9></span>' + '<br>Your Answer: <span class=youranswer id=q8></span>',
+		'10. ' + q10.question + '<br>Correct Answer: <span class=correct-answer id=a10></span>' + '<br>Your Answer: <span class=youranswer id=q10></span>',
 		],
 		null
 		// ^ iterate through questions and check CORRECT answers
@@ -130,18 +145,7 @@ var yourAnswers = {
 	end: null
 };
 
-// var correctAnswers = [
-// 	quizItemArr[1][1],
-// 	quizItemArr[2][3],
-// 	quizItemArr[3][0],
-// 	quizItemArr[4][3],
-// 	quizItemArr.q5[1],
-// 	quizItemArr.q6[3],
-// 	quizItemArr.q7[1],
-// 	quizItemArr.q8[0],
-// 	quizItemArr.q9[2],
-// 	quizItemArr.q10[0, 1, 2, 3],
-// ]
+
 
 // Render quiz
 	function renderQuestion(item){
@@ -151,7 +155,8 @@ var yourAnswers = {
 	function renderAnswerList(item) {
 			var answerList = [];
 			$.each(item.answers, function(i, value){
-				var answerHTML = '<div class="answer-container"><input type="radio" name="answer" id="'+value+'"><label for=\"'+value+'\" class=answer>'+value+'</label></div>'
+				console.log('answer list value: ' + value);
+				var answerHTML = '<div class=answer-container><input type=radio name=answer id="'+value+'"><label for="'+value+'">'+value+'</label></div>'
 				answerList.push(answerHTML);
 			});
 
@@ -186,7 +191,7 @@ var yourAnswers = {
 	function initializeSelection(){
 	// Save answer selection to yourAnswer object and then check it
 	$('.quiz-box').find('input[type=radio]').change(function(){
-		// console.log('SELECTED: ' + $(this).attr('id'));4
+
 		// Disable selection when one is made and enable button
 		$('input[type=radio]').attr('disabled', true);
 		$('.button').attr('disabled', false);
@@ -194,16 +199,41 @@ var yourAnswers = {
 		q = 'q'+quizItemArr.indexOf(currentQ);
 		yourAnswers[q] = $(this).attr('id');
 		console.log('YOUR ANSWER: ' + yourAnswers[q]);
-		// $('.overlay').addClass('enabled')
-		checkAnswer(yourAnswers[q]);
-		$('.pop-up').addClass('enabled').text('You chose: ' + yourAnswers[q])
+
+		// Check Answer
+		checkAnswer(quizItemArr.indexOf(currentQ), yourAnswers[q]);
+		
 	});
 	}
-
-	function checkAnswer(answer) {
-		if (answer == currentQ){
-
+	//Checks answer and returns result along with colored DIV
+	function checkAnswer(location, answer) {
+		if (answer == correctAnswers[location]){
+			console.log('CORRECT');
+			return $('.pop-up').removeClass('incorrect').addClass('enabled correct').text('CORRECT \n'+ correctAnswers[location]);
 		}
+
+		else if (location == 10){
+			console.log('ANY ANSWER CORRECT');
+			return $('.pop-up').removeClass('incorrect').addClass('enabled correct').text('CORRECT \n'+ 'All answers are correct; get some sleep already!');
+		}
+
+		else {
+			console.log('INCORRECT');
+			return $('.pop-up').removeClass('correct').addClass('enabled incorrect').text('INCORRECT \n'+ correctAnswers[location]);
+		}
+	}
+
+	function renderCorrect(){
+		$('#a1').text(correctAnswers[1]);
+		$('#a2').text(correctAnswers[2]);
+		$('#a3').text(correctAnswers[3]);
+		$('#a4').text(correctAnswers[4]);
+		$('#a5').text(correctAnswers[5]);
+		$('#a6').text(correctAnswers[6]);
+		$('#a7').text(correctAnswers[7]);
+		$('#a8').text(correctAnswers[8]);
+		$('#a9').text(correctAnswers[9]);
+		$('#a10').text(correctAnswers[10]);
 	}
 
 	function renderYourAnswers(){
@@ -229,6 +259,7 @@ function renderQuiz(x){
 	renderAnswerList(x);
 	initializeSelection();
 	renderYourAnswers();
+	renderCorrect();
 	renderCounter();
 	console.log('QUIZ RENDERED');
 }
