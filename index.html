@@ -14,19 +14,22 @@
 	<section>
 		<div class="quiz-box">
 			<form class="quiz-form" action=" ">
-				<div class="question"></div>
+				<span class="question">
+					<!-- Question here -->	
+				</span>
 				<ul class="answer-list">
-					<div class="answer-container">
-						<!-- each question here -->
-					</div>
+						<!-- each answer here -->
 				</ul>
-				<input id="submit" class="button" type="submit" value="Next">
+				<input id="btn-submit" class="button display-none" type="submit" value="Next">
+				<input id="btn-alt" class="button" type="button" value="BUTTON">
 			</form>
 			<div class="question-counter">
 			</div>
 		</div>
 		<div class="overlay"></div>
-		<div class="pop-up"></div>
+		<div class="pop-up">
+			<p></p>
+		</div>
 	</section>
 </main>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

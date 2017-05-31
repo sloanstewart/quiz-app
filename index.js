@@ -30,7 +30,7 @@ function createQuizItems(){
 	);
 
 	var q1 = new QuizItem('What is Murphy\'s Law?',
-		['&quot;The road to success and the road to failure are almost exactly the same.&quot;',
+		['&quot;The road to success and the road to failure are almost exactly the same.&quot; ',
 		'&quot;Anything that can go wrong, will go wrong.&quot;',
 		'&quot;Two wrongs don&#39;t make a right.&quot;',
 		'&quot;Hope for the best, but prepare for the worst.&quot;'],
@@ -110,16 +110,16 @@ function createQuizItems(){
 	);
 
 	var end = new QuizItem('Well, you made it to the end. See your results below:',[
-		'01. ' + q1.question + '<br>Correct Answer: <span class=correct-answer id=a1></span>' + '<br>Your Answer: <span class=youranswer id=q1></span>',
-		'02. ' + q2.question + '<br>Correct Answer: <span class=correct-answer id=a2></span>' + '<br>Your Answer: <span class=youranswer id=q2></span>',
-		'03. ' + q3.question + '<br>Correct Answer: <span class=correct-answer id=a3></span>' + '<br>Your Answer: <span class=youranswer id=q3></span>',
-		'04. ' + q4.question + '<br>Correct Answer: <span class=correct-answer id=a4></span>' + '<br>Your Answer: <span class=youranswer id=q4></span>',
-		'05. ' + q5.question + '<br>Correct Answer: <span class=correct-answer id=a5></span>' + '<br>Your Answer: <span class=youranswer id=q5></span>',
-		'06. ' + q6.question + '<br>Correct Answer: <span class=correct-answer id=a6></span>' + '<br>Your Answer: <span class=youranswer id=q6></span>',
-		'07. ' + q9.question + '<br>Correct Answer: <span class=correct-answer id=a7></span>' + '<br>Your Answer: <span class=youranswer id=q9></span>',
-		'08. ' + q7.question + '<br>Correct Answer: <span class=correct-answer id=a8></span>' + '<br>Your Answer: <span class=youranswer id=q7></span>',
-		'09. ' + q8.question + '<br>Correct Answer: <span class=correct-answer id=a9></span>' + '<br>Your Answer: <span class=youranswer id=q8></span>',
-		'10. ' + q10.question + '<br>Correct Answer: <span class=correct-answer id=a10></span>' + '<br>Your Answer: <span class=youranswer id=q10></span>',
+		'01. ' + q1.question + '<br>Correct Answer: <span class=correct-answer id=a1></span>' + '<br>Your Answer: <span class=youranswer id=1></span>',
+		'02. ' + q2.question + '<br>Correct Answer: <span class=correct-answer id=a2></span>' + '<br>Your Answer: <span class=youranswer id=2></span>',
+		'03. ' + q3.question + '<br>Correct Answer: <span class=correct-answer id=a3></span>' + '<br>Your Answer: <span class=youranswer id=3></span>',
+		'04. ' + q4.question + '<br>Correct Answer: <span class=correct-answer id=a4></span>' + '<br>Your Answer: <span class=youranswer id=4></span>',
+		'05. ' + q5.question + '<br>Correct Answer: <span class=correct-answer id=a5></span>' + '<br>Your Answer: <span class=youranswer id=5></span>',
+		'06. ' + q6.question + '<br>Correct Answer: <span class=correct-answer id=a6></span>' + '<br>Your Answer: <span class=youranswer id=6></span>',
+		'07. ' + q9.question + '<br>Correct Answer: <span class=correct-answer id=a7></span>' + '<br>Your Answer: <span class=youranswer id=9></span>',
+		'08. ' + q7.question + '<br>Correct Answer: <span class=correct-answer id=a8></span>' + '<br>Your Answer: <span class=youranswer id=7></span>',
+		'09. ' + q8.question + '<br>Correct Answer: <span class=correct-answer id=a9></span>' + '<br>Your Answer: <span class=youranswer id=8></span>',
+		'10. ' + q10.question + '<br>Correct Answer: <span class=correct-answer id=a10></span>' + '<br>Your Answer: <span class=youranswer id=10></span>',
 		],
 		null
 		// ^ iterate through questions and check CORRECT answers
@@ -128,22 +128,9 @@ function createQuizItems(){
 };
 
 // Store Current Question and Answers
-quizItemArr = createQuizItems();
+var quizItemArr = createQuizItems();
 var currentQ = quizItemArr[0];
-var yourAnswers = {
-	intro: null,
-	q0: "",
-	q1: "",
-	q2: "",
-	q3: "",
-	q4: "",
-	q5: "",
-	q6: "",
-	q7: "",
-	q8: "",
-	q9: "",
-	end: null
-};
+var yourAnswers = [0];
 
 
 
@@ -155,33 +142,39 @@ var yourAnswers = {
 	function renderAnswerList(item) {
 			var answerList = [];
 			$.each(item.answers, function(i, value){
-				console.log('answer list value: ' + value);
-				var answerHTML = '<div class=answer-container><input type=radio name=answer id="'+value+'"><label for="'+value+'">'+value+'</label></div>'
+				// console.log('answer list value: ' + value);
+				var answerHTML = '<li class=answer-container><input class=visuallyhidden type=radio name=answer id="'+value+'"><label for="'+value+'"></span>'+value+'</span></label></li>'
 				answerList.push(answerHTML);
 			});
-
-		$('.answer-list').html(answerList);
+		$('.answer-list').html(answerList); 
 
 		// Disable radio selection for intro and end. Change buttons for those sections.
 		if (currentQ == quizItemArr[0]){
 			console.log('AT INTRO');
 			$('input[type=radio]').attr('disabled', true);
-			$('.button').attr('value', 'BEGIN');
+			$('#btn-alt').attr('value', 'BEGIN').click(function(){
+				nextQuestion();
+			});
 		}
 
 		else if (currentQ == quizItemArr[11]){
 			console.log('AT END');
 			$('input[type=radio]').attr('disabled', true);
-			$('.button').attr('value', 'RESTART').click(function(){
+			$('#btn-submit').addClass('display-none');
+			$('#btn-alt').attr('value', 'RESTART').click(function(){
 				window.location.href=' ';
 			});
 		}
 
-		// Button should read NEXT for questions
+		// Button should read SUBMIT for questions
 		else {
-			$('.button').attr('value', 'NEXT');
-			$('.button').attr('disabled', true);
-			$('.button').addClass('disabled');
+			$('input[type=radio]:first').prop('checked', true).focus(); // Sets checked and focus for first radio button
+			$('input[type=radio]:checked').parent('li').addClass('js-focus');
+			$('#btn-alt').addClass('display-none');
+			$('#btn-submit').attr('value', 'SUBMIT').removeClass('display-none');
+
+
+			
 		}
 
 		console.log('ANSWER LIST RENDERED');
@@ -190,36 +183,40 @@ var yourAnswers = {
 
 	function initializeSelection(){
 	// Save answer selection to yourAnswer object and then check it
-	$('.quiz-box').find('input[type=radio]').change(function(){
+	$('input[type=radio]').change(function(){
+		// Toggle visual style for selected answer
+		$('input[type=radio]:not(:checked)').parent('li').removeClass('js-focus');
+		$('input[type=radio]:checked').parent('li').addClass('js-focus');
 
-		// Disable selection when one is made and enable button
-		$('input[type=radio]').attr('disabled', true);
-		$('.button').attr('disabled', false);
-		$('.button').removeClass('disabled');
-		q = 'q'+quizItemArr.indexOf(currentQ);
-		yourAnswers[q] = $(this).attr('id');
-		console.log('YOUR ANSWER: ' + yourAnswers[q]);
-
-		// Check Answer
-		checkAnswer(quizItemArr.indexOf(currentQ), yourAnswers[q]);
-		
 	});
 	}
+
 	//Checks answer and returns result along with colored DIV
 	function checkAnswer(location, answer) {
+		var nextButton = '<input id="btn-next" class="button" type="button" value="Continue">';
+		$('#btn-submit').prop('disabled', true);
 		if (answer == correctAnswers[location]){
 			console.log('CORRECT');
-			return $('.pop-up').removeClass('incorrect').addClass('enabled correct').text('CORRECT \n'+ correctAnswers[location]);
+			$('.pop-up').removeClass('incorrect').addClass('enabled correct').html(nextButton).html('<h2>CORRECT</h2> <p>'+correctAnswers[location]+'</p>'+nextButton);
+			$('#btn-next').click(function(){
+				nextQuestion();
+			});
 		}
 
 		else if (location == 10){
 			console.log('ANY ANSWER CORRECT');
-			return $('.pop-up').removeClass('incorrect').addClass('enabled correct').text('CORRECT \n'+ 'All answers are correct; get some sleep already!');
+			$('.pop-up').removeClass('incorrect').addClass('enabled correct').html('<h2>CORRECT</h2> <p>All answers are correct; get some sleep already!</p>'+nextButton);
+			$('#btn-next').click(function(){
+				nextQuestion();
+			});
 		}
 
 		else {
 			console.log('INCORRECT');
-			return $('.pop-up').removeClass('correct').addClass('enabled incorrect').text('INCORRECT \n'+ correctAnswers[location]);
+			$('.pop-up').removeClass('correct').addClass('enabled incorrect').html('<h2>INCORRECT</h2><p>'+correctAnswers[location]+'</p>'+nextButton);
+			$('#btn-next').click(function(){
+				nextQuestion();
+			});
 		}
 	}
 
@@ -237,16 +234,16 @@ var yourAnswers = {
 	}
 
 	function renderYourAnswers(){
-		$('#q1').text(yourAnswers.q1);
-		$('#q2').text(yourAnswers.q2);
-		$('#q3').text(yourAnswers.q3);
-		$('#q4').text(yourAnswers.q4);
-		$('#q5').text(yourAnswers.q5);
-		$('#q6').text(yourAnswers.q6);
-		$('#q7').text(yourAnswers.q7);
-		$('#q8').text(yourAnswers.q8);
-		$('#q9').text(yourAnswers.q9);
-		$('#q10').text(yourAnswers.q10);
+		$('#1').text(yourAnswers[1]);
+		$('#2').text(yourAnswers[2]);
+		$('#3').text(yourAnswers[3]);
+		$('#4').text(yourAnswers[4]);
+		$('#5').text(yourAnswers[5]);
+		$('#6').text(yourAnswers[6]);
+		$('#7').text(yourAnswers[7]);
+		$('#8').text(yourAnswers[8]);
+		$('#9').text(yourAnswers[9]);
+		$('#10').text(yourAnswers[10]);
 	}
 
 	
@@ -270,15 +267,16 @@ function renderQuiz(x){
 
 function nextQuestion(){
 	console.log('NEXT');
-	event.preventDefault();
 	findCurrentQ();
 	renderQuiz(currentQ);
 	$('.pop-up').removeClass('enabled')
+	$('#btn-submit').prop('disabled', false);
+
 };
 
 // Find the question that should be currently displayed
 function findCurrentQ(i) {
-	for(i = 0; i < quizItemArr.length; i++) {
+	for(var i = 0; i < quizItemArr.length; i++) {
 		if (quizItemArr[i].question == currentQ.question){
 			currentQ = quizItemArr[i + 1];
 			console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
@@ -296,8 +294,14 @@ $(function() {
 	// Call render functions
 	console.log('CURRENTQ IS: [' + quizItemArr.indexOf(currentQ) + '] ' + currentQ.question);
 	renderQuiz(currentQ);
-	// Next (submit) button
-	$('form').submit(function(event){
-		nextQuestion(event);
+	$('form').submit(function(event){ // SUBMIT BUTTON
+		event.preventDefault();
+		console.log('SUBMIT');
+		yourAnswers.push($('input[type=radio]:checked').attr('id')); // Store answer
+		var location = quizItemArr.indexOf(currentQ); // find location of current question
+		var answer = yourAnswers[location];
+		console.log('YOUR ANSWER: ' + answer);
+
+		checkAnswer(location, answer); // Call function to check answer
 	});
 });
