@@ -161,9 +161,10 @@ var yourAnswers = [0];
 		else if (currentQ == quizItemArr[11]){
 			console.log('AT END');
 			$('input[type=radio]').attr('disabled', true); // Disable radio selection
-			$('#btn-submit').addClass('display-none'); // Hide SUBMIT 
+			$('#btn-submit').addClass('display-none'); // Hide SUBMIT
+			$('#btn-alt').removeClass('display-none');
 			$('#btn-alt').attr('value', 'RESTART').click(function(){ // Change button to RESTART and link to page to 'refresh'
-				window.location.href=' ';
+				window.location.href='';
 			});
 		}
 
