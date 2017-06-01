@@ -140,55 +140,63 @@ var yourAnswers = [0];
 	}
 
 	function renderAnswerList(item) {
-			var answerList = [];
-			$.each(item.answers, function(i, value){
-				// console.log('answer list value: ' + value);
-				var answerHTML = '<li class=answer-container><input class=visuallyhidden type=radio name=answer id="'+value+'"><label for="'+value+'"></span>'+value+'</span></label></li>'
-				answerList.push(answerHTML);
-			});
+		var answerList = [];
+		$.each(item.answers, function(i, value){
+			// console.log('answer list value: ' + value);
+			var answerHTML = '<li class=answer-container><input class=visuallyhidden type=radio name=answer id="'+value+'"><label for="'+value+'"></span>'+value+'</span></label></li>'
+			answerList.push(answerHTML);
+		});
 		$('.answer-list').html(answerList); 
 
-		// Disable radio selection for intro and end. Change buttons for those sections.
+		// INTRO
 		if (currentQ == quizItemArr[0]){
 			console.log('AT INTRO');
-			$('input[type=radio]').attr('disabled', true);
-			$('#btn-alt').attr('value', 'BEGIN').click(function(){
+			$('input[type=radio]').attr('disabled', true); // Disable radio selection
+			$('#btn-alt').attr('value', 'BEGIN').click(function(){ // Change button value to BEGIN
 				nextQuestion();
 			});
 		}
 
+		// END
 		else if (currentQ == quizItemArr[11]){
 			console.log('AT END');
-			$('input[type=radio]').attr('disabled', true);
-			$('#btn-submit').addClass('display-none');
-			$('#btn-alt').attr('value', 'RESTART').click(function(){
+			$('input[type=radio]').attr('disabled', true); // Disable radio selection
+			$('#btn-submit').addClass('display-none'); // Hide SUBMIT 
+			$('#btn-alt').attr('value', 'RESTART').click(function(){ // Change button to RESTART and link to page to 'refresh'
 				window.location.href=' ';
 			});
 		}
 
-		// Button should read SUBMIT for questions
+		// QUESTIONS
 		else {
-			$('input[type=radio]:first').prop('checked', true).focus(); // Sets checked and focus for first radio button
-			$('input[type=radio]:checked').parent('li').addClass('js-focus');
+			focusStyles();
+			// Display SUBMIT instead of alt buttons
 			$('#btn-alt').addClass('display-none');
-			$('#btn-submit').attr('value', 'SUBMIT').removeClass('display-none');
-
-
-			
+			$('#btn-submit').attr('value', 'SUBMIT').removeClass('display-none');	
 		}
 
 		console.log('ANSWER LIST RENDERED');
 	}
 
 
-	function initializeSelection(){
-	// Save answer selection to yourAnswer object and then check it
-	$('input[type=radio]').change(function(){
-		// Toggle visual style for selected answer
-		$('input[type=radio]:not(:checked)').parent('li').removeClass('js-focus');
-		$('input[type=radio]:checked').parent('li').addClass('js-focus');
+	function focusStyles(){
+		// Sets checked and focus for first radio button adds style for li and the parent ul
+		$('input[type=radio]:first').prop('checked', true).focus().closest('ul').addClass('js-focus');;
+		$('input[type=radio]:checked').parent('li').addClass('js-li-focus');
 
-	});
+		// Adds custom focus class to UL to indicate entire radio group is in focus
+		$('input[type=radio]').focusin(function(){
+			$('input[type=radio]').closest('ul').addClass('js-focus');
+		});
+		$('input[type=radio]').focusout(function(){
+			$('input[type=radio]').closest('ul').removeClass('js-focus');
+		});
+		
+		// Toggle visual focus style for selected answer's li
+		$('input[type=radio]').change(function(){
+		$('input[type=radio]:not(:checked)').parent('li').removeClass('js-li-focus');
+		$('input[type=radio]:checked').parent('li').addClass('js-li-focus');
+		});
 	}
 
 	//Checks answer and returns result along with colored DIV
@@ -197,7 +205,7 @@ var yourAnswers = [0];
 		$('#btn-submit').prop('disabled', true);
 		if (answer == correctAnswers[location]){
 			console.log('CORRECT');
-			$('.pop-up').removeClass('incorrect').addClass('enabled correct').html(nextButton).html('<h2>CORRECT</h2> <p>'+correctAnswers[location]+'</p>'+nextButton);
+			$('.pop-up').removeClass('incorrect').addClass('enabled correct').html('<h2>CORRECT</h2> <p>'+correctAnswers[location]+'</p>'+nextButton);
 			$('#btn-next').click(function(){
 				nextQuestion();
 			});
@@ -256,7 +264,6 @@ function renderQuiz(x){
 	createQuizItems();
 	renderQuestion(x);
 	renderAnswerList(x);
-	initializeSelection();
 	renderYourAnswers();
 	renderCorrect();
 	renderCounter();
