@@ -13,24 +13,50 @@
 <main>
 	<section>
 		<div class="quiz-box">
-			<form class="quiz-form" action=" ">
+			<form class="quiz-form" action="">
 				<span class="question">
 					<!-- Question here -->	
 				</span>
 				<ul class="answer-list">
 						<!-- each answer here -->
 				</ul>
-				<input id="btn-submit" class="button display-none" type="submit" value="Next">
-				<input id="btn-alt" class="button" type="button" value="BUTTON">
+				<button id="btn-submit" class="button display-none" type="submit">Submit</button>
+				<button id="btn-alt" class="button" type="button">Button</button>
 			</form>
-			<div class="question-counter">
-			</div>
+			<div class="question-counter"></div>
 		</div>
 		<div class="overlay"></div>
 		<div class="pop-up">
 			<p></p>
 		</div>
 	</section>
+
+	<!-- new form mockup -->
+	<form>
+		<fieldset> <!-- please style this & legend -->
+			<legend> <!-- question here? --> </legend>
+				<ul>
+					<li>
+						<label for="answer-0"><span>Answer One</span></label>
+						<input type="radio" name="answers" id="answer-0">
+					</li>
+					<li>
+						<label for="answer-1"><span>Answer Two</span></label>
+						<input type="radio" name="answers" id="answer-1">
+					</li>
+					<li>
+						<label for="answer-2"><span>Answer Three</span></label>
+						<input type="radio" name="answers" id="answer-2">
+					</li>
+					<li>
+						<label for="answer-3"><span>Answer Four</span></label>
+						<input type="radio" name="answers" id="answer-3">
+					</li>
+				</ul>
+		</fieldset>
+	</form>
+
+
 </main>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="index.js"></script>

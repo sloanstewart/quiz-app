@@ -143,40 +143,45 @@ var yourAnswers = [0];
 		var answerList = [];
 		$.each(item.answers, function(i, value){
 			// console.log('answer list value: ' + value);
-			var answerHTML = '<li class=answer-container><input class=visuallyhidden type=radio name=answer id="'+value+'"><label for="'+value+'"></span>'+value+'</span></label></li>'
-			answerList.push(answerHTML);
+			var listHTML = (`
+					<input class="visuallyhidden" type="radio" name="answer" id="radio-${i}" ${(i===0 ? 'checked="checked"': null)}>
+					<label for="radio-${i}">${value}</label>
+				`);
+			var answerHTML = '<li class=answer-container><input class=visuallyhidden type=radio name=answer id="'+value+'" checked='+(i === 0 ? true : false)+'><label for="'+value+'"></span>'+value+'</span></label></li>'
+			answerList.push(listHTML);
 		});
-		$('.answer-list').html(answerList); 
+		$('.answer-list').html(answerList);
 
 		// INTRO
 		if (currentQ == quizItemArr[0]){
-			console.log('AT INTRO');
 			$('input[type=radio]').attr('disabled', true); // Disable radio selection
 			$('#btn-alt').attr('value', 'BEGIN').click(function(){ // Change button value to BEGIN
 				nextQuestion();
 			});
+			console.log('AT INTRO');
 		}
 
 		// END
 		else if (currentQ == quizItemArr[11]){
-			console.log('AT END');
 			$('input[type=radio]').attr('disabled', true); // Disable radio selection
 			$('#btn-submit').addClass('display-none'); // Hide SUBMIT
 			$('#btn-alt').removeClass('display-none');
 			$('#btn-alt').attr('value', 'RESTART').click(function(){ // Change button to RESTART and link to page to 'refresh'
 				window.location.href='';
+				console.log('RESTART');
 			});
+			console.log('AT END');
 		}
 
 		// QUESTIONS
 		else {
-			focusStyles();
+			// focusStyles();
 			// Display SUBMIT instead of alt buttons
 			$('#btn-alt').addClass('display-none');
 			$('#btn-submit').attr('value', 'SUBMIT').removeClass('display-none');	
 		}
 
-		console.log('ANSWER LIST RENDERED');
+		console.log('LIST RENDERED');
 	}
 
 
