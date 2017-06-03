@@ -1,47 +1,49 @@
 var CURRENT_PAGE = 0;
 var QUESTION_TEXT = $('#question');
+var USER_ANSWER = "";
 var BUTTON_SUBMIT = $('#button-submit');
 var STORE = [
 	{
 		// [0] (INTRO)
 		q: 'Welcome to this incredible quiz; now shut up and hang on.',
 		a: ['Choose your answer carefully', 'Only the penitent man will pass.', 'Have fun and good luck!', null],
+		u: null
 	},
 	{
 		// [1]
 		q:'What is Murphy\'s Law?',
 		a: ['&quot;The road to success and the road to failure are almost exactly the same.&quot; ', '&quot;Anything that can go wrong, will go wrong.&quot;', '&quot;Two wrongs don&#39;t make a right.&quot;', '&quot;Hope for the best, but prepare for the worst.&quot;'],
-		u: ''
+		u: []
 	},
 	{
 		// [2]
 		q: 'How can you tell, without question, if someone is allowed access?',
 		a: ['They will have a proper badge or pass.', 'Security will let them in if it&#39;s ok.', 'They look like part of the band.', 'They look like they want to be elsewhere.'],
-		u: ''
+		u: []
 	},
 	{
 		// [3]
 		q: 'As an audio tech, how can you avoid injury lifting heavy equipment?',
 		a: ['Label all heavy items as &quot;Lighting&quot;.', 'Lift with your legs, never your back.', 'Have someone help you lift.', 'Try harder.'],
-		u: ''
+		u: []
 	},
 	{
 		// [4]
 		q: 'Video content is on the way, when should you test it?',
 		a: ['As soon as possible.', '1 hour before show.', '10 minutes before show.', 'Tell the client &quot;No&quot;.'],
-		u: ''
+		u: []
 	},
 	{
 		// [5]
 		q: 'How do you make money in the music business?',
 		a: ['Hard work and dedication.', 'Sell beer.', 'Networking -It&#39;s who you know that counts.', 'Knowledge - Folks will value your skills.'],
-		u: ''
+		u: []
 	},
 	{
 		// [6]
 		q: 'If a patron requests a change to the mix, what should you do?',
 		a: ['Ignore them.', 'Pretend to make an adjustment.', 'Have security escort them out of the event.', 'All of the above.'],
-		u: ''
+		u: []
 	},
 	{
 		// [7]
@@ -70,7 +72,7 @@ var STORE = [
 	{
 		// [11] (END)
 		q: 'Well, you made it to the end. See your results below:',
-		a: ''
+		a: []
 	}
 ];
 
@@ -79,19 +81,25 @@ function renderQA(currentPage){
 	for(i = 0 ; i < STORE[currentPage].a.length; i++){ // Render answers to Radio labels
 		$('label[for="answer-'+i+'"] > span').text(STORE[currentPage].a[i]);
 	};
-	console.log('QA '+CURRENT_PAGE+' rendered.');
-	CURRENT_PAGE = CURRENT_PAGE + 1;
-}
+
+
+	console.log('CURRENT_PAGE: '+CURRENT_PAGE);
+	CURRENT_PAGE = CURRENT_PAGE + 1; // After current page is loaded, increment the count
+
+} 
+
 
 function storeUserAnswer(){
-
+	var answer = $('input:checked').siblings('span').text();
+	STORE[CURRENT_PAGE].u.push(answer);
+	console.log('STORE['+CURRENT_PAGE+'].u is: '+STORE[1].u+'');
 }
 
 function checkUserAnswer(){
 
 }
 
-function results(){ // Match each user answer with appropriate question
+function results(){ // Match each user a+STORE[1].u+''swer with appropriate question
 	var resultsArray=[];
 	for(i = 1 ; i < STORE.length-1; i++){
 		var q = STORE[i].q;
@@ -111,5 +119,10 @@ $(function(){
 		storeUserAnswer();
 		checkUserAnswer();
 		renderQA(CURRENT_PAGE);
+	});
+
+	$('input[type=radio]').change(function(){
+		USER_ANSWER = $('input:checked').siblings('span').text();
+		console.log('USER_ANSWER IS: '+USER_ANSWER);
 	});
 });
