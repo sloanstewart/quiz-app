@@ -4,7 +4,7 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c, r), hi
 	questions: [{
 					// [0] (INTRO)
 					q: 'Welcome to this incredible quiz; now shut up and hang on.',
-					a: ['Choose your answer carefully', 'Only the penitent man will pass.', 'Have fun and good luck!', 'suh dude'],
+					a: ['Choose your answer carefully', 'Only the penitent man will pass.', 'Have fun and good luck!'],
 					u: null,
 					c: null,
 					r: null
