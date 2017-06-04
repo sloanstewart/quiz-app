@@ -93,13 +93,14 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 	if(currentQ == 0){ // INTRO
 		$('#count').css('visibility', 'hidden');
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
-			$('label[for="answer-'+index+'"]').text(answer);
+			var introHTML = `${answer}<br>`;
+			$('#intro').append(introHTML);
 		});
+		$('.radio-item').hide();
 		$('#button-submit').text('Begin');
 	}
 	else if(currentQ == 11){ // END
 		$('#count').css('visibility', 'hidden');
-		$('#button-submit').text('Restart');
 		getResults();
 		for (i = 1; i < STORE.questions.length-1; i++){ // Render answers to radio labels
 				var results = {
@@ -110,12 +111,15 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 					r: STORE.questions[i].r
 				}
 			var resultsHTML = `<p>${results.n}: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}<br>Result: ${results.r}</p>`;
-			$('.radio-item').remove();
-			$('#form-content').append(resultsHTML);
+			$('.radio-item').hide();
+			$('#end-results').show().append(resultsHTML);
+			$('#button-submit').text('Restart');
 		};
 	}
 	else{
 		$('#count').css('visibility', 'visible');
+		$('#intro').hide();
+		$('.radio-item').show();
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 			$('label[for="answer-'+index+'"]').text(answer);
 		});
