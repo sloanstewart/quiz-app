@@ -70,7 +70,7 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 				},{
 					// [11] (END)
 					q: 'Well, you made it to the end. See your results below:',
-					a: [],
+					a: null,
 					u: null,
 					c: null
 				}],
@@ -80,10 +80,15 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 function renderQA(currentQ, qSelector){ //Render current question and matching answers to the 
 	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
-	STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
-		$('label[for="answer-'+index+'"]').text(answer);
-	});
-	initSelection();
+	if(currentQ < 11){
+		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
+			$('label[for="answer-'+index+'"]').text(answer);
+		});
+		initSelection();
+	}
+	else{
+
+	}
 	displayResult(null);
 } 
 
@@ -105,12 +110,19 @@ function getUserAnswer(event){ // This gets the checked radio and stores it
 
 function handleSubmit(event){ //When a fool smashes dat SUBMIT, please do the following
 	event.preventDefault();
-	console.log('SUBMIT');
-	storeUserAnswer(getUserAnswer());
-	checkUserAnswer(getUserAnswer());
-	CURRENTQ = STORE.currentQ += 1; // Increment to move to next Question
-	Q_SELECTOR = $('#question'); // <----- I think there's probably a better way to do this rather than declare this again
-	renderQA(CURRENTQ, Q_SELECTOR); //Renders the new current page (next page)
+
+	if(STORE.currentQ == 11){ // If at end, submit will reload entire quiz
+		window.location.href='';
+		console.log('RESTART');
+	}
+	else{
+		console.log('SUBMIT');
+		storeUserAnswer(getUserAnswer());
+		checkUserAnswer(getUserAnswer());
+		CURRENTQ = STORE.currentQ += 1; // Increment to move to next Question
+		Q_SELECTOR = $('#question'); // <----- I think there's probably a better way to do this rather than declare this again
+		renderQA(CURRENTQ, Q_SELECTOR); //Renders the new current page (next page)
+	}
 }
 
 function storeUserAnswer(answer){ // Push stored User Answer into the answerHistory array
