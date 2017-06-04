@@ -108,9 +108,10 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 			var results = {
 				q: STORE.questions[index].q,
 				c: STORE.questions[index].a[STORE.questions[index].c],
-				u: STORE.questions[index].a[STORE.questions[index].u]
+				u: STORE.questions[index].a[STORE.questions[index].u],
+				r: STORE.questions[index].r
 			}
-			var resultsHTML = `<p>Question: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}</p>`;
+			var resultsHTML = `<p>Question: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}<br>Result: ${results.r}</p>`;
 			$('.radio-item').remove();
 			$('#form-content').append(resultsHTML);	
 		});
@@ -167,10 +168,12 @@ function storeUserAnswer(answer){ // Push stored User Answer into the answerHist
 function checkUserAnswer(userAnswer){ // check answer and push true if correct, false if incorrect
 	console.log('Checking: '+userAnswer);
 	if(userAnswer == STORE.questions[STORE.currentQ].c){
-		return console.log('CORRECT!');
+		STORE.questions[STORE.currentQ].r = 'Correct';
+		console.log('CORRECT!');
 		displayResult('CORRECT!');
 	}
 	else {
+		STORE.questions[STORE.currentQ].r = 'Incorrect';
 		console.log('YA BLEW IT!');
 		displayResult('YA BLEW IT!');
 	}
