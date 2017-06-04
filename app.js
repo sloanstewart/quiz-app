@@ -78,20 +78,23 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 };
 
 function renderQA(currentQ, qSelector){ //Render current question and matching answers to the 
+	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
 	STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 		$('label[for="answer-'+index+'"]').text(answer);
 	});
 	if(currentQ == 0){
 		console.log('YOU ARE AT THE INTRO');
+		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Begin');
 	}
 	else if(currentQ == 11){
 		console.log('YOU ARE AT THE END');
+		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Restart');
 	}
 	else{
-		$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
+		$('#count').css('visibility', 'visible');
 		$('#button-submit').text('Submit');
 	}
 	initSelection();
