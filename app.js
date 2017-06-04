@@ -104,17 +104,17 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Restart');
 		getResults();
-		STORE.questions.forEach(function(answer, index){ // Render answers to radio labels
+		for (i = 1; i < STORE.questions.length-1; i++){ // Render answers to radio labels
 			var results = {
-				q: STORE.questions[index].q,
-				c: STORE.questions[index].a[STORE.questions[index].c],
-				u: STORE.questions[index].a[STORE.questions[index].u],
-				r: STORE.questions[index].r
+				q: STORE.questions[i].q,
+				c: STORE.questions[i].a[STORE.questions[i].c],
+				u: STORE.questions[i].a[STORE.questions[i].u],
+				r: STORE.questions[i].r
 			}
 			var resultsHTML = `<p>Question: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}<br>Result: ${results.r}</p>`;
 			$('.radio-item').remove();
 			$('#form-content').append(resultsHTML);	
-		});
+		};
 	}
 	else{
 		$('#count').css('visibility', 'visible');
