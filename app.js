@@ -11,90 +11,97 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 					// [1]
 					q:'What is Murphy\'s Law?',
 					a: ['"The road to success and the road to failure are almost exactly the same."', '"Anything that can go wrong, will go wrong."', '"Two wrongs don\'t make a right."', '"Hope for the best, but prepare for the worst."'],
-					u: "unanswered",
+					u: null,
 					c: 1
 				},{
 					// [2]
 					q: 'How can you tell, without question, if someone is allowed access?',
 					a: ['They will have a proper badge or pass.', 'Security will let them in if it\'s ok.', 'They look like part of the band.', 'They look like they want to be elsewhere.'],
-					u: "unanswered",
+					u: null,
 					c: 3
 				},{
 					// [3]
 					q: 'As an audio tech, how can you avoid injury lifting heavy equipment?',
 					a: ['Label all heavy items as \"Lighting\".', 'Lift with your legs, never your back.', 'Have someone help you lift.', 'Try harder.'],
-					u: "unanswered",
+					u: null,
 					c: 0
 				},{
 					// [4]
 					q: 'Video content is on the way, when should you test it?',
 					a: ['As soon as possible.', '1 hour before show.', '10 minutes before show.', 'Tell the client \"No\".'],
-					u: "unanswered",
+					u: null,
 					c: 3
 				},{
 					// [5]
 					q: 'How do you make money in the music business?',
 					a: ['Hard work and dedication.', 'Sell beer.', 'Networking -It\'s who you know that counts.', 'Knowledge - Folks will value your skills.'],
-					u: "unanswered",
+					u: null,
 					c: 1
 				},{
 					// [6]
 					q: 'If a patron requests a change to the mix, what should you do?',
 					a: ['Ignore them.', 'Pretend to make an adjustment.', 'Have security escort them out of the event.', 'All of the above.'],
-					u: "unanswered",
+					u: null,
 					c: 3
 				},{
 					// [7]
 					q: 'Lighting is taking a long time to load out, what should you do?',
 					a: ['Jump in and help wrap some cables.', 'Try to catch a nap or have a snack.', 'Offer to help tear down fixtures.', 'Push cases to the truck.'],
-					u: "unanswered",
+					u: null,
 					c: 1
 				},{
 					// [8]
 					q: 'When should you schedule your lunch or dinner break?',
 					a: ['There is no lunch or dinner break.', 'Mid-day.', 'During intermission or set change.', 'After the event is complete.'],
-					u: "unanswered",
+					u: null,
 					c: 0
 				},{
 					// [9]
 					q: 'An artist shows up with a tom drum that is not part of the drum kit, you should:',
 					a: ['Make sure you have a microphone for it.', 'Add some low end EQ for maximum impact.', 'Throw it in the garbage.', 'Make sure it is tuned properly.'],
-					u: "unanswered",
+					u: null,
 					c: 2
 				},{
 					// [10]
 					q: 'When was the last time you got enough sleep?',
 					a: ['Huh?', 'What?', 'I dunno.', 'Eh.'],
-					u: "unanswered",
+					u: null,
 					c: [0,1,2,3] //ALL ANSWERS CORRECT
 				},{
 					// [11] (END)
 					q: 'Well, you made it to the end. See your results below:',
-					a: null,
+					a: [],
 					u: null,
 					c: null
 				}],
 	answerHistory: [], // Number value of answer, current answer will be last
 };
 
-function renderQA(currentQ, qSelector){ //Render current question and matching answers to the 
+function renderQA(currentQ, qSelector){ //Render current question and matching answers to the form
 	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
-	STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
-		$('label[for="answer-'+index+'"]').text(answer);
-	});
 	if(currentQ == 0){
 		console.log('YOU ARE AT THE INTRO');
 		$('#count').css('visibility', 'hidden');
+		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
+			$('label[for="answer-'+index+'"]').text(answer);
+		});
 		$('#button-submit').text('Begin');
 	}
 	else if(currentQ == 11){
 		console.log('YOU ARE AT THE END');
 		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Restart');
+		getResults();
+		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
+			$('label[for="answer-'+index+'"]').html(STORE.questions[currentQ].a[index].q+'<br>'+STORE.questions[currentQ].a[index].a);
+		});
 	}
 	else{
 		$('#count').css('visibility', 'visible');
+		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
+			$('label[for="answer-'+index+'"]').text(answer);
+		});
 		$('#button-submit').text('Submit');
 	}
 	initSelection();
@@ -155,14 +162,15 @@ function displayResult(result){ // Show if User Answer is correct or not
 	$('#result').text(result);
 }
 
-function endResults(){ // Match each user answer with appropriate question
+function getResults(){ // Match each user answer with appropriate question
 	var resultsArray=[];
-	for(i = 1 ; i < STORE.length-1; i++){
-		var q = STORE[i].q;
-		var a = STORE[i].u;
-		resultsArray.push( {[q]:a} );
+	for(i = 1 ; i < STORE.questions.length-1; i++){
+		var question = STORE.questions[i].q;
+		var answerNum = STORE.questions[i].u;
+		var answerStr = STORE.questions[i].a[answerNum];
+		resultsArray.push( {q:question, a:answerStr} );
 	}
-	return STORE[11].a = resultsArray;
+	return STORE.questions[11].a = resultsArray;
 }
 
 $(function(){ //DOCUMENT READY!
