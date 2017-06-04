@@ -6,67 +6,78 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 					q: 'Welcome to this incredible quiz; now shut up and hang on.',
 					a: ['Choose your answer carefully', 'Only the penitent man will pass.', 'Have fun and good luck!', 'suh dude'],
 					u: null,
-					c: null
+					c: null,
+					r: null
 				},{
 					// [1]
 					q:'What is Murphy\'s Law?',
 					a: ['"The road to success and the road to failure are almost exactly the same."', '"Anything that can go wrong, will go wrong."', '"Two wrongs don\'t make a right."', '"Hope for the best, but prepare for the worst."'],
 					u: null,
-					c: 1
+					c: 1,
+					r: null
 				},{
 					// [2]
 					q: 'How can you tell, without question, if someone is allowed access?',
 					a: ['They will have a proper badge or pass.', 'Security will let them in if it\'s ok.', 'They look like part of the band.', 'They look like they want to be elsewhere.'],
 					u: null,
-					c: 3
+					c: 3,
+					r: null
 				},{
 					// [3]
 					q: 'As an audio tech, how can you avoid injury lifting heavy equipment?',
 					a: ['Label all heavy items as \"Lighting\".', 'Lift with your legs, never your back.', 'Have someone help you lift.', 'Try harder.'],
 					u: null,
-					c: 0
+					c: 0,
+					r: null
 				},{
 					// [4]
 					q: 'Video content is on the way, when should you test it?',
 					a: ['As soon as possible.', '1 hour before show.', '10 minutes before show.', 'Tell the client \"No\".'],
 					u: null,
-					c: 3
+					c: 3,
+					r: null
 				},{
 					// [5]
 					q: 'How do you make money in the music business?',
 					a: ['Hard work and dedication.', 'Sell beer.', 'Networking -It\'s who you know that counts.', 'Knowledge - Folks will value your skills.'],
 					u: null,
-					c: 1
+					c: 1,
+					r: null
 				},{
 					// [6]
 					q: 'If a patron requests a change to the mix, what should you do?',
 					a: ['Ignore them.', 'Pretend to make an adjustment.', 'Have security escort them out of the event.', 'All of the above.'],
 					u: null,
-					c: 3
+					c: 3,
+					r: null
 				},{
 					// [7]
 					q: 'Lighting is taking a long time to load out, what should you do?',
 					a: ['Jump in and help wrap some cables.', 'Try to catch a nap or have a snack.', 'Offer to help tear down fixtures.', 'Push cases to the truck.'],
 					u: null,
-					c: 1
+					c: 1,
+					r: null
 				},{
 					// [8]
 					q: 'When should you schedule your lunch or dinner break?',
 					a: ['There is no lunch or dinner break.', 'Mid-day.', 'During intermission or set change.', 'After the event is complete.'],
 					u: null,
-					c: 0
+					c: 0,
+					r: null
 				},{
 					// [9]
 					q: 'An artist shows up with a tom drum that is not part of the drum kit, you should:',
 					a: ['Make sure you have a microphone for it.', 'Add some low end EQ for maximum impact.', 'Throw it in the garbage.', 'Make sure it is tuned properly.'],
 					u: null,
-					c: 2
+					c: 2,
+					r: null
 				},{
 					// [10]
 					q: 'When was the last time you got enough sleep?',
 					a: ['Huh?', 'What?', 'I dunno.', 'Eh.'],
 					u: null,
-					c: [0,1,2,3] //ALL ANSWERS CORRECT
+					c: null, //ALL ANSWERS CORRECT
+					r: null
 				},{
 					// [11] (END)
 					q: 'Well, you made it to the end. See your results below:',
@@ -93,8 +104,15 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Restart');
 		getResults();
-		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
-			$('label[for="answer-'+index+'"]').html(STORE.questions[currentQ].a[index].q+'<br>'+STORE.questions[currentQ].a[index].a);
+		STORE.questions.forEach(function(answer, index){ // Render answers to radio labels
+			var results = {
+				q: STORE.questions[index].q,
+				c: STORE.questions[index].a[STORE.questions[index].c],
+				u: STORE.questions[index].a[STORE.questions[index].u]
+			}
+			var resultsHTML = `<p>Question: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}</p>`;
+			$('.radio-item').remove();
+			$('#form-content').append(resultsHTML);	
 		});
 	}
 	else{
