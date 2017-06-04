@@ -1,4 +1,4 @@
-const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), history
+const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c, r), history
 	currentQ: 0,
 	currentUserAnswer: null,
 	questions: [{
@@ -76,45 +76,42 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 					q: 'When was the last time you got enough sleep?',
 					a: ['Huh?', 'What?', 'I dunno.', 'Eh.'],
 					u: null,
-					c: null, //ALL ANSWERS CORRECT
-					r: null
+					c: 'Any', //ALL ANSWERS CORRECT
+					r: 'Correct'
 				},{
 					// [11] (END)
 					q: 'Well, you made it to the end. See your results below:',
 					a: [],
 					u: null,
 					c: null
-				}],
-	answerHistory: [], // Number value of answer, current answer will be last
-};
+				}]
+	};
 
 function renderQA(currentQ, qSelector){ //Render current question and matching answers to the form
 	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
-	if(currentQ == 0){
-		console.log('YOU ARE AT THE INTRO');
+	if(currentQ == 0){ // INTRO
 		$('#count').css('visibility', 'hidden');
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 			$('label[for="answer-'+index+'"]').text(answer);
 		});
 		$('#button-submit').text('Begin');
 	}
-	else if(currentQ == 11){
-		console.log('YOU ARE AT THE END');
+	else if(currentQ == 11){ // END
 		$('#count').css('visibility', 'hidden');
 		$('#button-submit').text('Restart');
 		getResults();
 		for (i = 1; i < STORE.questions.length-1; i++){ // Render answers to radio labels
-			var results = {
-				n: i,
-				q: STORE.questions[i].q,
-				c: STORE.questions[i].a[STORE.questions[i].c],
-				u: STORE.questions[i].a[STORE.questions[i].u],
-				r: STORE.questions[i].r
-			}
+				var results = {
+					n: i,
+					q: STORE.questions[i].q,
+					c: STORE.questions[i].a[STORE.questions[i].c],
+					u: STORE.questions[i].a[STORE.questions[i].u],
+					r: STORE.questions[i].r
+				}
 			var resultsHTML = `<p>${results.n}: ${results.q}<br>Correct Answer: ${results.c}<br>Your Answer: ${results.u}<br>Result: ${results.r}</p>`;
 			$('.radio-item').remove();
-			$('#form-content').append(resultsHTML);	
+			$('#form-content').append(resultsHTML);
 		};
 	}
 	else{
@@ -168,7 +165,13 @@ function storeUserAnswer(answer){ // Push stored User Answer into the answerHist
 
 function checkUserAnswer(userAnswer){ // check answer and push true if correct, false if incorrect
 	console.log('Checking: '+userAnswer);
-	if(userAnswer == STORE.questions[STORE.currentQ].c){
+	if(STORE.currentQ == 10){ // Any answer is correct for question 10
+		STORE.questions[10].a.push('Any'); // Push a new answer 'Any'
+		STORE.questions[10].c = 4;	// Ensure correct answer will be 'Any'
+		console.log('CORRECT!');
+		displayResult('CORRECT!');
+	}
+	else if(userAnswer == STORE.questions[STORE.currentQ].c){
 		STORE.questions[STORE.currentQ].r = 'Correct';
 		console.log('CORRECT!');
 		displayResult('CORRECT!');
