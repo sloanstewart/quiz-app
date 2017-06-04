@@ -82,7 +82,8 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 	STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 		$('label[for="answer-'+index+'"]').text(answer);
 	});
-	initSelection();	
+	initSelection();
+	displayResult(null);
 } 
 
 function initSelection(){ // CHECK FIRST RADIO AND GET IT AS THE CURRENT ANSWER
@@ -120,13 +121,19 @@ function checkUserAnswer(userAnswer){ // check answer and push true if correct, 
 	console.log('Checking: '+userAnswer);
 	if(userAnswer == STORE.questions[STORE.currentQ].c){
 		return console.log('CORRECT!');
+		displayResult('CORRECT!');
 	}
 	else {
 		console.log('YA BLEW IT!');
+		displayResult('YA BLEW IT!');
 	}
 }
 
-function results(){ // Match each user answer with appropriate question
+function displayResult(result){ // Show if User Answer is correct or not
+	$('#result').text(result);
+}
+
+function endResults(){ // Match each user answer with appropriate question
 	var resultsArray=[];
 	for(i = 1 ; i < STORE.length-1; i++){
 		var q = STORE[i].q;
