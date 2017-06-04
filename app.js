@@ -77,7 +77,8 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c), histo
 	answerHistory: [], // Number value of answer, current answer will be last
 };
 
-function renderQA(currentQ, qSelector){ //Render current question and matching answers to the form
+function renderQA(currentQ, qSelector){ //Render current question and matching answers to the 
+	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
 	STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 		$('label[for="answer-'+index+'"]').text(answer);
