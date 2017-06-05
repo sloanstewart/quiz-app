@@ -119,7 +119,9 @@ function renderQA(){ //Render current question and matching answers to the form
 				}
 			var resultsHTML = `<p class="results-p"><span class="results-number">${results.n}.</span> <span class="results-question">${results.q}</span><br>Correct Answer: <span class="results-correct">${results.c}</span><br>Your Answer: <span class="results-user">${results.u}</span><br>Result: <span class="results-result">${results.r}</span></p>`;
 			$('.radio-item').hide();
-			$('#end-results').show().append(resultsHTML);
+			$('#end-results').hide();
+			$('#end-results').append(resultsHTML);
+			$('#end-results').fadeIn();
 			$('#button-submit').show().text('Restart');
 			$('#button-continue').hide();
 		};
@@ -127,7 +129,7 @@ function renderQA(){ //Render current question and matching answers to the form
 	else{
 		$('#count').css('visibility', 'visible');
 		$('#intro').hide();
-		$('.radio-item').show();
+		$('.radio-item').fadeIn();
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 			$('label[for="answer-'+index+'"]').text(answer);
 		});
@@ -198,7 +200,7 @@ function checkUserAnswer(userAnswer){ // check answer and push true if correct, 
 function displayResult(result){ // Show if User Answer is correct or not
 	$('.radio-item').hide();
 	$('#button-submit').hide();
-	$('#result').show();
+	$('#result').fadeIn();
 	$('#result > p').text(result);
 	$('#button-continue').show().unbind('click').click(function(e){
 		e.preventDefault();
