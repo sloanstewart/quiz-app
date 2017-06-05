@@ -125,7 +125,7 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 		});
 		$('#button-submit').text('Submit');
 	}
-	initSelection();
+	initSelection();	
 	displayResult(null);
 } 
 
@@ -141,7 +141,6 @@ function startListeners(form){ // LISTEN TO FORM FOR ANSWER SELECTION AND SUBMIT
 
 function getUserAnswer(event){ // This gets the checked radio and stores it
 	STORE.currentUserAnswer = Number($('input:checked').val());
-	// console.log('currentUserAnswer is: '+STORE.currentUserAnswer);
 	return STORE.currentUserAnswer;
 }
 
@@ -164,11 +163,9 @@ function handleSubmit(event){ //When a fool smashes dat SUBMIT, please do the fo
 
 function storeUserAnswer(answer){ // Push stored User Answer into the answerHistory array
 	STORE.questions[STORE.currentQ].u = answer;
-	console.log('STORE.questions['+STORE.currentQ+'].u is: '+STORE.questions[STORE.currentQ].u+'');
 }	
 
 function checkUserAnswer(userAnswer){ // check answer and push true if correct, false if incorrect
-	console.log('Checking: '+userAnswer);
 	if(STORE.currentQ == 10){ // Any answer is correct for question 10
 		STORE.questions[10].a.push('Any'); // Push a new answer 'Any'
 		STORE.questions[10].c = 4;	// Ensure correct answer will be 'Any'
@@ -206,7 +203,6 @@ $(function(){ //DOCUMENT READY!
 	const FORM = $('form');
 	const Q_SELECTOR = $('#question');
 	const CURRENTQ = STORE.currentQ
-	console.log('DOM READY');
 	renderQA(CURRENTQ, Q_SELECTOR);
 	startListeners(FORM);
 });
