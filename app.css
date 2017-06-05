@@ -8,12 +8,16 @@ body {
 	text-align: center;
 }
 
-h1{padding;0; margin:1rem auto;}
+h1{
+	color: #F1A9A0;
+	padding:0; 
+	margin:1rem auto;
+	font-weight: normal;
+}
 
 a {
 	color: #F1A9A0;
 	text-decoration: none;
-	font-weight: normal;
 }
 
 a:hover, a:focus {
