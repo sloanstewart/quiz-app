@@ -1,0 +1,205 @@
+body {
+	font-family: 'Arimo', sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	letter-spacing: 0.1em;
+	font-weight: 100;
+	color: #fff;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	min-width: 225px;
+	height: 100vh;
+	background-color: rgba(95, 114, 189, 0.70);
+	background-image: linear-gradient(to top, rgba(95, 114, 189, 0.70) 0%, rgba(155, 35, 234, 0.70) 100%);
+	background-repeat: no-repeat;
+	background-size: 100vw, 100vh;
+	background-attachment: fixed;
+}
+a {
+	text-decoration: none;
+	color: rgb(225, 20, 150);
+	transition: all 0.2s ease-in-out;
+}
+
+a:hover, a:active {
+/*	color: #451C57;
+*/}
+
+header{
+	background-color: rgba(0, 0, 0, 0.25);
+	border-bottom: 0.01rem solid #451C57;
+}
+
+h1 {
+	display: inline;
+	font-family: 'Permanent Marker', cursive;
+	font-style: italic;
+	font-weight: 100;
+	line-height: 1.8em;
+	padding: 0.5rem;
+	text-shadow:
+   -1px -1px 0 #f77adc,  
+    1px -1px 0 #673c62,
+    -1px 1px 0 #75356d,
+     1px 1px 0 #000;
+}
+
+.quiz-box {
+	overflow: auto;
+	text-align: center;
+	padding: 0;
+	margin: 0 auto;
+}
+
+.quiz-form {
+	overflow: auto;
+}
+
+.question {
+	display: inline-block;
+	font-weight: 700;
+	padding: 1rem;
+	margin: auto;
+}
+
+.answer-list {
+	list-style-type: none;
+	padding: 2rem 0 2rem 0;
+	margin: auto;
+}
+
+.correct-answer {
+	font-style: italic;
+}
+
+.youranswer{
+	font-style: italic;
+	color: rgba(0, 0, 0, 0.90);
+}
+
+/*Hide radio selectors*/
+.visuallyhidden { 
+  position: absolute; 
+  overflow: hidden; 
+  clip: rect(0 0 0 0); 
+  height: 1px; width: 1px; 
+  margin: -1px; padding: 0; border: 0; 
+}
+
+*:focus, .js-focus{
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: rgba(255, 20, 150, 0.25);
+  background-color: rgba(255, 20, 150, 0.10);
+*/}
+
+input[type=radio]+label{
+	display: inline-block;
+	width:80%;
+	text-align: left;
+	padding: 1rem;
+	transition: all 0.2s;
+}
+input[type=radio]:checked+label{
+		background-color: rgba(0, 0, 0, 0.25);
+}
+
+ul.answer-list li:focus, .js-li-focus{
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+input[disabled]+label{
+	pointer-events: none;
+}
+
+.button {
+	font-size: 1em;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	color: #fff;
+	text-transform: uppercase;
+	padding: 1rem 2rem;
+	margin: 2em;
+	background-color: rgba(0,0,0,0.40);
+	border:0;
+	transition: all 0.2s ease-in-out;
+	transform: all 0.2s ease-in-out;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.button:hover:not([disabled="disabled"]), .button:focus {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	transform: translateZ(1.025);
+}
+form .button {
+	background-color: rgba(255,20,150,0.50);
+}
+form .button:hover:not([disabled="disabled"]), form .button:focus){
+	background-color: rgba(255,20,150,0.80);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	transform: translateZ(1.025);
+}
+
+.button:disabled{
+	opacity: 0.2;
+	color:transparent;
+	background-color: rgba(0,0,0,0.40);
+	box-shadow: none;
+}
+
+.question-counter {
+	font-style: italic;
+	color: rgba(0, 0, 0, 0.50);
+	padding: 0;
+}
+
+.pop-up {
+	position: absolute;
+	visibility: hidden;
+	top: 25%;
+	left: 50%;
+	width: 50%;
+	max-width: 500px;
+	padding: 2em;
+	transform: translate(-50%, -25%);
+	white-space: pre-line;
+	background-color: black;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	transition: all 0.2s ease-in-out;
+	transform: all 0.2s ease-in-out;
+	opacity: 0;
+}
+
+.correct {
+background: rgba(68, 160, 141, 1);
+}
+
+.incorrect {
+	background:#FF6B6B;
+}
+
+.enabled {
+	visibility: visible;
+	opacity: 1;
+}
+
+.display-none{
+	display: none;
+}
+
+@media (min-width: 768px) {
+	main{
+		max-width: 768px;
+		margin: auto;
+	}
+}
+
+/* WebKit gets its native focus styles.
+ */
+@media (-webkit-min-device-pixel-ratio:0) {
+  .unreal-focus {
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+  }
+}
