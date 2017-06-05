@@ -1,3 +1,5 @@
+document.documentElement.className = 'no-fouc'; // To prevent FOUC! - see the document ready for more
+
 const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c, r), history
 	currentQ: 0,
 	currentUserAnswer: null,
@@ -218,4 +220,5 @@ function getResults(){ // Match each user answer with appropriate question
 $(function(){ //DOCUMENT READY!
 	renderQA();
 	startListeners($('form'));
+	$('.no-fouc').removeClass('no-fouc');
 });
