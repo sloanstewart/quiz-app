@@ -38,10 +38,14 @@ a:hover, a:focus {
 #count{
 	font-weight: lighter;
 }
-
+form {
+	max-width: 960px;
+	margin: auto;
+}
 fieldset{
+	min-height: 60vh;
 	text-align: left;
-	margin: 1rem auto;
+	margin: 1em auto;
 	border: 1px solid #F4B350;
 }
 
@@ -100,3 +104,9 @@ fieldset{
 
 .correct {color: #87D37C}
 .incorrect {color: #F2784B}
+
+@media (max-width: 500px){
+	h1{font-size: 1.5em;margin:0.10rem;}
+	#count{font-size: 0.75em;}
+	fieldset{margin:0.10rem;}
+}
