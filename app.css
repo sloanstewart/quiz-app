@@ -21,7 +21,7 @@ a:hover, a:focus {
 }
 
 .radio-item {
-	padding: 2em;
+	padding: 1rem 0rem;
 }
 
 .radio-item label:hover, .radio-item label:focus{
