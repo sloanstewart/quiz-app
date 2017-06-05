@@ -88,7 +88,8 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c, r), hi
 	};
 
 function renderQA(currentQ, qSelector){ //Render current question and matching answers to the form
-	$('#count').text('Question '+STORE.currentQ+' of '+STORE.questions.length); // Render question count
+	var questionsLength = STORE.questions.length-2;
+	$('#count').text('Question '+STORE.currentQ+' of '+questionsLength); // Render question count
 	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
 	if(currentQ == 0){ // INTRO
 		$('#count').css('visibility', 'hidden');
