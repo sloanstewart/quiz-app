@@ -1,10 +1,14 @@
 body {
 	font-family: 'Share Tech Mono', monospace;
 	font-size: 20px;
-	letter-spacing: 0.05rem;
+	letter-spacing: 0.05em;
 	color: #aaa;
 	background-color: #1d2f3a;
+	box-sizing: border-box;
+	text-align: center;
 }
+
+h1{padding;0; margin:1rem auto;}
 
 a {
 	color: #F1A9A0;
@@ -16,12 +20,22 @@ a:hover, a:focus {
 	font-weight: bold;
 }
 
+#count{
+	font-weight: lighter;
+}
+
+fieldset{
+	text-align: left;
+	margin: 1rem auto;
+	border: 1px solid #F4B350;
+}
+
 #question {
 	color: #F4B350;
 }
 
 .radio-item {
-	padding: 1rem 0rem;
+	padding: 0.5rem 0em;
 }
 
 .radio-item label:hover, .radio-item label:focus{
@@ -30,5 +44,32 @@ a:hover, a:focus {
 
 .radio-item input:checked + label {
 	color: #E8E8E8;
+	font-weight: bo;ld;
+}
+
+.results-p{
+	padding: 1rem 0rem;
+	margin: 1rem 0rem;}
+.results-number{}
+.results-question{}
+.results-correct{}
+.results-user{}
+.results-result{}
+
+#button-submit{
+	font-family: 'Share Tech Mono', monospace;
+	font-size: 1rem;
 	font-weight: bold;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	padding: 0.5rem;
+	margin: 0rem;
+	border:0;
+	color:#1d2f3a;
+/* 	border:0.1em solid #F4B350; */
+	background-color: #F4B350;
+}
+
+#button-submit:hover, #button-submit:focus {
+		background-color:#E8E8E8;
 }
