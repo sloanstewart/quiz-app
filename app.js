@@ -111,7 +111,7 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 					u: STORE.questions[i].a[STORE.questions[i].u],
 					r: STORE.questions[i].r
 				}
-			var resultsHTML = `<p><span class="results-number">${results.n}</span>. <span class="results-question">${results.q}</span><br>Correct Answer: <span class="results-correct">${results.c}</span><br>Your Answer: <span class="results-user">${results.u}</span><br>Result: <span class="results-result">${results.r}</span></p>`;
+			var resultsHTML = `<p class="results-p"><span class="results-number">${results.n}.</span> <span class="results-question">${results.q}</span><br>Correct Answer: <span class="results-correct">${results.c}</span><br>Your Answer: <span class="results-user">${results.u}</span><br>Result: <span class="results-result">${results.r}</span></p>`;
 			$('.radio-item').hide();
 			$('#end-results').show().append(resultsHTML);
 			$('#button-submit').text('Restart');
