@@ -1,10 +1,19 @@
+html { 
+	background: linear-gradient( rgba(29, 47, 58, 0.96), rgba(29, 47, 58, 0.96)), url(img/bg3.jpg) no-repeat center center fixed;  
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
 body {
 	font-family: 'Share Tech Mono', monospace;
 	font-size: 20px;
 	letter-spacing: 0.05em;
 	color: #aaa;
-	background-color: #1d2f3a;
 	box-sizing: border-box;
+	padding:0;
+	margin: 0.5rem;
 	text-align: center;
 }
 
