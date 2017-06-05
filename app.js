@@ -184,12 +184,14 @@ function checkUserAnswer(userAnswer){ // check answer and push true if correct, 
 	else if(userAnswer == STORE.questions[STORE.currentQ].c){
 		STORE.questions[STORE.currentQ].r = 'Correct';
 		console.log('CORRECT!');
-		displayResult('CORRECT!');
+		$('#result').removeClass('incorrect').addClass('correct');
+		displayResult('CORRECT!')
 	}
 	else {
 		STORE.questions[STORE.currentQ].r = 'Incorrect';
 		console.log('YA BLEW IT!');
-		displayResult('YA BLEW IT!');
+		$('#result').removeClass('correct').addClass('incorrect');
+		displayResult('YA BLEW IT!')
 	}
 }
 

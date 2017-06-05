@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	font-family: 'Share Tech Mono', monospace;
+	font-family: 'Share Tech Mono', monospace, sans-serif;
 	font-size: 20px;
 	letter-spacing: 0.05em;
 	color: #aaa;
@@ -21,7 +21,6 @@ body {
 }
 
 h1{
-	color: #F1A9A0;
 	padding:0; 
 	margin:1rem auto;
 	font-weight: normal;
@@ -65,7 +64,8 @@ fieldset{
 
 .results-p{
 	padding: 1rem 0rem;
-	margin: 1rem 0rem;}
+	margin: 1rem 0rem;
+}
 .results-number{}
 .results-question{}
 .results-correct{}
@@ -91,11 +91,12 @@ fieldset{
 }
 
 #result {
+	font-size: 1.5em;
+	font-weight: bold;
 	text-align: center;
 	padding: 1em;
 	margin: 0;
-	background-color: rgba(255,255,255, 0.1);
 }
 
-.correct {background-color: rgba(0,255,0,0.5)}
-.incorrect {background-color: rgba(255,0,0,0.5)}
+.correct {color: #87D37C}
+.incorrect {color: #F2784B}
