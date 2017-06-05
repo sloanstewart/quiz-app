@@ -93,7 +93,7 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 	if(currentQ == 0){ // INTRO
 		$('#count').css('visibility', 'hidden');
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
-			var introHTML = `${answer}<br>`;
+			var introHTML = `<p>${answer}</p>`;
 			$('#intro').append(introHTML);
 		});
 		$('.radio-item').hide();
