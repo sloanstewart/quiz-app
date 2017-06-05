@@ -69,7 +69,7 @@ fieldset{
 .results-user{}
 .results-result{}
 
-#button-submit{
+.button{
 	font-family: 'Share Tech Mono', monospace;
 	font-size: 1rem;
 	font-weight: bold;
@@ -83,6 +83,16 @@ fieldset{
 	background-color: #F4B350;
 }
 
-#button-submit:hover, #button-submit:focus {
+.button:hover, #button-submit:focus {
 		background-color:#E8E8E8;
 }
+
+#result {
+	text-align: center;
+	padding: 1em;
+	margin: 0;
+	background-color: rgba(255,255,255, 0.1);
+}
+
+.correct {background-color: rgba(0,255,0,0.5)}
+.incorrect {background-color: rgba(255,0,0,0.5)}

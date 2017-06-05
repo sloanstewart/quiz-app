@@ -87,10 +87,13 @@ const STORE = { // currentQuestion, currentUserAnswer, question (q,a,u,c, r), hi
 				}]
 	};
 
-function renderQA(currentQ, qSelector){ //Render current question and matching answers to the form
-	var questionsLength = STORE.questions.length-2;
-	$('#count').text('Question '+STORE.currentQ+' of '+questionsLength); // Render question count
-	qSelector.text(STORE.questions[currentQ].q); // Render question as form legend text
+function renderQA(){ //Render current question and matching answers to the form
+	var currentQ = STORE.currentQ;
+	$('#count').text('Question '+currentQ+' of '+(STORE.questions.length-2)); // Render question count
+	$('#question').text(STORE.questions[currentQ].q); // Render question as form legend text
+	$('#result').hide(); // Hide result DIV
+	initSelection();	// Select first radio button
+
 	if(currentQ == 0){ // INTRO
 		$('#count').css('visibility', 'hidden');
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
@@ -98,7 +101,8 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 			$('#intro').append(introHTML);
 		});
 		$('.radio-item').hide();
-		$('#button-submit').text('Begin');
+		$('#button-submit').show().text('Begin');
+		$('#button-continue').hide();
 	}
 	else if(currentQ == 11){ // END
 		$('#count').css('visibility', 'hidden');
@@ -114,7 +118,8 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 			var resultsHTML = `<p class="results-p"><span class="results-number">${results.n}.</span> <span class="results-question">${results.q}</span><br>Correct Answer: <span class="results-correct">${results.c}</span><br>Your Answer: <span class="results-user">${results.u}</span><br>Result: <span class="results-result">${results.r}</span></p>`;
 			$('.radio-item').hide();
 			$('#end-results').show().append(resultsHTML);
-			$('#button-submit').text('Restart');
+			$('#button-submit').show().text('Restart');
+			$('#button-continue').hide();
 		};
 	}
 	else{
@@ -124,10 +129,10 @@ function renderQA(currentQ, qSelector){ //Render current question and matching a
 		STORE.questions[currentQ].a.forEach(function(answer, index){ // Render answers to radio labels
 			$('label[for="answer-'+index+'"]').text(answer);
 		});
-		$('#button-submit').text('Submit');
+		$('#button-submit').show().text('Submit');
+		$('#button-continue').hide();
 	}
-	initSelection();	
-	displayResult(null);
+	console.log('CurrentQ is: '+currentQ);
 } 
 
 function initSelection(){ // CHECK FIRST RADIO AND GET IT AS THE CURRENT ANSWER
@@ -148,17 +153,18 @@ function getUserAnswer(event){ // This gets the checked radio and stores it
 function handleSubmit(event){ //When a fool smashes dat SUBMIT, please do the following
 	event.preventDefault();
 
-	if(STORE.currentQ == 11){ // If at end, submit will reload entire quiz
-		window.location.href='';
+	if(STORE.currentQ == 11 ){ // If at end, submit will reload entire quiz
 		console.log('RESTART');
+		window.location.href='';
+	}
+	else if(STORE.currentQ == 0){
+		console.log('BEGIN');
+		renderQA(STORE.currentQ += 1); //Renders the new current page (next page)
 	}
 	else{
 		console.log('SUBMIT');
 		storeUserAnswer(getUserAnswer());
 		checkUserAnswer(getUserAnswer());
-		CURRENTQ = STORE.currentQ += 1; // Increment to move to next Question
-		Q_SELECTOR = $('#question'); // <----- I think there's probably a better way to do this rather than declare this again
-		renderQA(CURRENTQ, Q_SELECTOR); //Renders the new current page (next page)
 	}
 }
 
@@ -186,7 +192,16 @@ function checkUserAnswer(userAnswer){ // check answer and push true if correct, 
 }
 
 function displayResult(result){ // Show if User Answer is correct or not
-	$('#result').text(result);
+	$('.radio-item').hide();
+	$('#button-submit').hide();
+	$('#result').show();
+	$('#result > p').text(result);
+	$('#button-continue').show().unbind('click').click(function(e){
+		e.preventDefault();
+		console.log('currentq +1')
+		renderQA(STORE.currentQ += 1); //Renders the new current page (next page)
+
+	});
 }
 
 function getResults(){ // Match each user answer with appropriate question
@@ -201,9 +216,6 @@ function getResults(){ // Match each user answer with appropriate question
 }
 
 $(function(){ //DOCUMENT READY!
-	const FORM = $('form');
-	const Q_SELECTOR = $('#question');
-	const CURRENTQ = STORE.currentQ
-	renderQA(CURRENTQ, Q_SELECTOR);
-	startListeners(FORM);
+	renderQA();
+	startListeners($('form'));
 });
